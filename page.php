@@ -22,6 +22,7 @@ require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/markdown.php';
 require_once __DIR__ . '/includes/search.php';
+require_once __DIR__ . '/includes/auth.php';
 
 // Get page slug from URL
 $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
