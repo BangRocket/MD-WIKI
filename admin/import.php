@@ -80,6 +80,12 @@ include __DIR__ . '/includes/header.php';
                         </p>
                         <p>
                             <strong>Current Vault Path:</strong> <?= h(VAULT_PATH) ?>
+                            <?php if (function_exists('resolveVaultPath') && resolveVaultPath(VAULT_PATH) !== VAULT_PATH): ?>
+                                <br><small class="text-muted">Resolves to: <?= h(resolveVaultPath(VAULT_PATH)) ?></small>
+                                <?php if (DEBUG_MODE): ?>
+                                    <br><small class="text-muted">Website root: <?= h(dirname(__DIR__)) ?></small>
+                                <?php endif; ?>
+                            <?php endif; ?>
                         </p>
                         <p>
                             <strong>Note:</strong> Only files that have been modified since the last import will be updated.

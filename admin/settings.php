@@ -43,8 +43,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     
     if (empty($vaultPath)) {
         $errors[] = 'Vault path is required.';
-    } else if (!is_dir($vaultPath)) {
-        $errors[] = 'Vault path is not a valid directory.';
+    } else {
+        // Get the website root directory (parent of admin directory)
+        $websiteRoot = dirname(__DIR__);
+        
+        // Handle relative paths by converting to absolute paths
+        if (substr($vaultPath, 0, 2) === './') {
+            // For paths starting with ./
+            $absolutePath = $websiteRoot . substr($vaultPath, 1);
+        } else if (substr($vaultPath, 0, 1) !== '/' && substr($vaultPath, 1, 1) !== ':') {
+            // For other relative paths without leading slash or drive letter (Windows)
+            $absolutePath = $websiteRoot . '/' . $vaultPath;
+        } else {
+            // Already an absolute path
+            $absolutePath = $vaultPath;
+        }
+        
+        // Check if directory exists
+        if (!is_dir($absolutePath)) {
+            $errors[] = 'Vault path is not a valid directory. Resolved path: ' . $absolutePath;
+            
+            // Add debug info if in debug mode
+            if (DEBUG_MODE) {
+                $errors[] = 'Debug info: Website root = ' . $websiteRoot . 
+                            ', Original path = ' . $vaultPath . 
+                            ', Current script path = ' . __DIR__;
+            }
+        } else {
+            // Use the absolute path for storage
+            $vaultPath = $absolutePath;
+        }
     }
     
     if (empty($adminEmail)) {
@@ -156,7 +184,7 @@ include __DIR__ . '/includes/header.php';
                             <div class="mb-3">
                                 <label for="vault_path" class="form-label">Obsidian Vault Path</label>
                                 <input type="text" class="form-control" id="vault_path" name="vault_path" value="<?= h($vaultPath) ?>" required>
-                                <div class="form-text">The absolute path to your Obsidian vault directory.</div>
+                                <div class="form-text">Path to your Obsidian vault directory. You can use absolute paths (e.g., /home/user/vault) or relative paths (e.g., ./vaults).</div>
                             </div>
                             
                             <div class="mb-3">

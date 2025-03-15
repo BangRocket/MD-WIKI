@@ -16,6 +16,29 @@ require_once __DIR__ . '/../includes/markdown.php';
 set_time_limit(0);
 
 /**
+ * Resolve relative paths to absolute paths
+ * 
+ * @param string $path Path to resolve
+ * @return string Resolved absolute path
+ */
+function resolveVaultPath($path) {
+    // Get the website root directory (parent of import directory)
+    $websiteRoot = dirname(__DIR__);
+    
+    // Handle relative paths by converting to absolute paths
+    if (substr($path, 0, 2) === './') {
+        // For paths starting with ./
+        return $websiteRoot . substr($path, 1);
+    } else if (substr($path, 0, 1) !== '/' && substr($path, 1, 1) !== ':') {
+        // For other relative paths without leading slash or drive letter (Windows)
+        return $websiteRoot . '/' . $path;
+    }
+    
+    // Already an absolute path
+    return $path;
+}
+
+/**
  * Import markdown files from Obsidian vault
  * 
  * @param string $vaultPath Path to Obsidian vault
@@ -27,10 +50,20 @@ function importMarkdownFiles($vaultPath = null, $verbose = true) {
         $vaultPath = VAULT_PATH;
     }
     
-    // Validate vault path
-    if (!is_dir($vaultPath)) {
-        die("Error: Vault path '$vaultPath' is not a valid directory.");
+    // Resolve relative paths to absolute paths
+    $absolutePath = resolveVaultPath($vaultPath);
+    
+    if ($verbose && $absolutePath !== $vaultPath) {
+        echo "Resolved vault path: $vaultPath -> $absolutePath\n";
     }
+    
+    // Validate vault path
+    if (!is_dir($absolutePath)) {
+        die("Error: Vault path '$vaultPath' (resolved to '$absolutePath') is not a valid directory.");
+    }
+    
+    // Use the absolute path for the import
+    $vaultPath = $absolutePath;
     
     // Initialize statistics
     $stats = [
@@ -249,8 +282,8 @@ function updateBrokenLinks($verbose = true) {
     return $updatedCount;
 }
 
-// Run import if script is executed directly
-if (basename($_SERVER['SCRIPT_FILENAME']) === basename(__FILE__)) {
+// Run import if script is executed directly (not included)
+if (realpath($_SERVER['SCRIPT_FILENAME']) === realpath(__FILE__)) {
     // Check if this is being run from the command line
     $isCli = php_sapi_name() === 'cli';
     
