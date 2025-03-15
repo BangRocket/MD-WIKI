@@ -26,6 +26,9 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-json.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-markdown.min.js"></script>
     
+    <!-- Theme Switcher -->
+    <script src="<?= APP_URL ?>/assets/js/theme-switcher.js"></script>
+    
     <script>
         // Initialize Prism.js
         document.addEventListener('DOMContentLoaded', function() {

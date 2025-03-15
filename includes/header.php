@@ -13,6 +13,7 @@
     
     <!-- Custom CSS -->
     <link href="<?= APP_URL ?>/assets/css/style.css" rel="stylesheet">
+    <link href="<?= APP_URL ?>/assets/css/dark-mode.css" rel="stylesheet">
     
     <!-- Prism.js for syntax highlighting -->
     <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">
@@ -34,12 +35,18 @@
                             <a class="nav-link" href="<?= APP_URL ?>/search.php">Search</a>
                         </li>
                     </ul>
-                    <form class="d-flex" action="<?= APP_URL ?>/search.php" method="get">
-                        <input class="form-control me-2" type="search" name="q" placeholder="Search..." aria-label="Search">
-                        <button class="btn btn-light" type="submit">
-                            <i class="bi bi-search"></i>
+                    <div class="d-flex align-items-center">
+                        <button id="theme-toggle-btn" class="btn btn-light theme-toggle-btn me-2" type="button" aria-label="Toggle theme">
+                            <i class="bi bi-moon-fill"></i>
+                            <i class="bi bi-sun-fill"></i>
                         </button>
-                    </form>
+                        <form class="d-flex" action="<?= APP_URL ?>/search.php" method="get">
+                            <input class="form-control me-2" type="search" name="q" placeholder="Search..." aria-label="Search">
+                            <button class="btn btn-light" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </nav>

@@ -5,6 +5,19 @@
 
 // Include required files
 require_once __DIR__ . '/config/config.php';
+
+// Configure error reporting based on debug mode
+if (DEBUG_MODE) {
+    // Show all errors in debug mode
+    error_reporting(E_ALL);
+    ini_set('display_errors', 1);
+    ini_set('display_startup_errors', 1);
+} else {
+    // Hide errors in production
+    error_reporting(0);
+    ini_set('display_errors', 0);
+    ini_set('display_startup_errors', 0);
+}
 require_once __DIR__ . '/includes/database.php';
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/markdown.php';
@@ -57,7 +70,23 @@ include __DIR__ . '/includes/header.php';
         <!-- Main content -->
         <div class="col-md-9">
             <article class="wiki-content">
-                <h1><?= h($page['title']) ?></h1>
+<div class="d-flex justify-content-between align-items-center">
+    <h1><?= h($page['title']) ?></h1>
+    <?php 
+    $isLoggedIn = false;
+    try {
+        $isLoggedIn = isLoggedIn();
+    } catch (Exception $e) {
+        // Log error or handle silently
+    }
+    
+    if ($isLoggedIn) { 
+    ?>
+        <a href="<?= APP_URL ?>/admin/edit.php?slug=<?= h($page['slug']) ?>" class="btn btn-sm btn-outline-primary">
+            <i class="bi bi-pencil-square me-1"></i> Edit
+        </a>
+    <?php } ?>
+</div>
                 
                 <div class="text-muted mb-4">
                     <small>

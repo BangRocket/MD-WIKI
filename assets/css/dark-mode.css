@@ -1,0 +1,241 @@
+/* MD-WIKI Dark Mode Styles */
+
+/* Dark mode variables */
+:root.dark-mode {
+    --body-bg: #121212;
+    --body-color: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --card-border: #333;
+    --card-header-bg: #252525;
+    --input-bg: #2a2a2a;
+    --input-color: #e0e0e0;
+    --input-border: #444;
+    --btn-default-bg: #333;
+    --btn-default-color: #e0e0e0;
+    --link-color: #8ab4f8;
+    --link-hover-color: #aecbfa;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-bg: #252525;
+    --table-border: #444;
+    --table-header-bg: #252525;
+    --navbar-dark-bg: #1a1a1a;
+    --navbar-light-bg: #252525;
+}
+
+/* General dark mode styles */
+.dark-mode body {
+    background-color: var(--body-bg);
+    color: var(--body-color);
+}
+
+/* Navbar styles */
+.dark-mode .navbar-light {
+    background-color: var(--navbar-light-bg) !important;
+}
+
+.dark-mode .navbar-light .navbar-brand,
+.dark-mode .navbar-light .nav-link {
+    color: var(--body-color) !important;
+}
+
+.dark-mode .navbar-dark {
+    background-color: var(--navbar-dark-bg) !important;
+}
+
+/* Card styles */
+.dark-mode .card {
+    background-color: var(--card-bg);
+    border-color: var(--card-border);
+}
+
+.dark-mode .card-header {
+    background-color: var(--card-header-bg);
+    border-bottom-color: var(--border-color);
+}
+
+/* Form control styles */
+.dark-mode .form-control,
+.dark-mode .form-select {
+    background-color: var(--input-bg);
+    border-color: var(--input-border);
+    color: var(--input-color);
+}
+
+.dark-mode .form-control:focus,
+.dark-mode .form-select:focus {
+    background-color: var(--input-bg);
+    color: var(--input-color);
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.dark-mode .input-group-text {
+    background-color: var(--card-header-bg);
+    border-color: var(--input-border);
+    color: var(--body-color);
+}
+
+/* Button styles */
+.dark-mode .btn-light {
+    background-color: var(--btn-default-bg);
+    border-color: var(--border-color);
+    color: var(--btn-default-color);
+}
+
+.dark-mode .btn-outline-secondary {
+    color: #adb5bd;
+    border-color: #495057;
+}
+
+.dark-mode .btn-outline-secondary:hover {
+    background-color: #495057;
+    color: #e0e0e0;
+}
+
+/* Link styles */
+.dark-mode a {
+    color: var(--link-color);
+}
+
+.dark-mode a:hover {
+    color: var(--link-hover-color);
+}
+
+/* Wiki content styles */
+.dark-mode .wiki-content {
+    background-color: var(--card-bg);
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.2);
+}
+
+.dark-mode .wiki-content h1,
+.dark-mode .wiki-content h2 {
+    border-bottom-color: var(--border-color);
+}
+
+.dark-mode .wiki-content blockquote {
+    background-color: var(--blockquote-bg);
+    border-left-color: #666;
+}
+
+.dark-mode .wiki-content code {
+    background-color: var(--code-bg);
+}
+
+.dark-mode .wiki-content table th,
+.dark-mode .wiki-content table td {
+    border-color: var(--table-border);
+}
+
+.dark-mode .wiki-content table th {
+    background-color: var(--table-header-bg);
+}
+
+/* Wiki link styles */
+.dark-mode .wiki-link {
+    color: var(--link-color);
+    border-bottom-color: var(--link-color);
+}
+
+.dark-mode .wiki-link:hover {
+    color: var(--link-hover-color);
+    border-bottom-color: var(--link-hover-color);
+}
+
+/* Backlinks styles */
+.dark-mode .backlinks {
+    background-color: var(--card-header-bg);
+    border-left-color: var(--link-color);
+}
+
+/* Alert styles */
+.dark-mode .alert-warning {
+    background-color: #332d00;
+    border-color: #665c00;
+    color: #ffc107;
+}
+
+.dark-mode .alert-success {
+    background-color: #003300;
+    border-color: #006600;
+    color: #28a745;
+}
+
+.dark-mode .alert-danger {
+    background-color: #330000;
+    border-color: #660000;
+    color: #dc3545;
+}
+
+.dark-mode .alert-info {
+    background-color: #00332d;
+    border-color: #00665c;
+    color: #17a2b8;
+}
+
+/* List group styles */
+.dark-mode .list-group-item {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+    color: var(--body-color);
+}
+
+/* Footer styles */
+.dark-mode footer.bg-light {
+    background-color: var(--card-bg) !important;
+    color: var(--body-color);
+}
+
+/* Dropdown styles */
+.dark-mode .dropdown-menu {
+    background-color: var(--card-bg);
+    border-color: var(--border-color);
+}
+
+.dark-mode .dropdown-item {
+    color: var(--body-color);
+}
+
+.dark-mode .dropdown-item:hover,
+.dark-mode .dropdown-item:focus {
+    background-color: var(--card-header-bg);
+    color: var(--body-color);
+}
+
+.dark-mode .dropdown-divider {
+    border-top-color: var(--border-color);
+}
+
+/* Prism.js dark theme override */
+.dark-mode pre[class*="language-"],
+.dark-mode code[class*="language-"] {
+    background-color: #2d2d2d !important;
+    color: #ccc !important;
+    text-shadow: none !important;
+}
+
+/* Theme toggle button styles */
+.theme-toggle-btn {
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: 0.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.theme-toggle-btn:hover {
+    opacity: 0.8;
+}
+
+.theme-toggle-btn .bi-sun-fill,
+.dark-mode .theme-toggle-btn .bi-moon-fill {
+    display: none;
+}
+
+.theme-toggle-btn .bi-moon-fill,
+.dark-mode .theme-toggle-btn .bi-sun-fill {
+    display: inline-block;
+}

@@ -13,6 +13,7 @@
     
     <!-- Custom CSS -->
     <link href="<?= APP_URL ?>/assets/css/style.css" rel="stylesheet">
+    <link href="<?= APP_URL ?>/assets/css/dark-mode.css" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -48,6 +49,12 @@
                             </ul>
                         </li>
                         <li class="nav-item">
+                            <button id="theme-toggle-btn" class="btn btn-sm btn-outline-light theme-toggle-btn" type="button" aria-label="Toggle theme">
+                                <i class="bi bi-moon-fill"></i>
+                                <i class="bi bi-sun-fill"></i>
+                            </button>
+                        </li>
+                        <li class="nav-item ms-2">
                             <a class="nav-link" href="<?= APP_URL ?>/index.php" target="_blank">
                                 <i class="bi bi-box-arrow-up-right me-1"></i> View Wiki
                             </a>
