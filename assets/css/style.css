@@ -1,0 +1,208 @@
+/* MD-WIKI Custom Styles */
+
+/* General Styles */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f8f9fa;
+}
+
+main {
+    min-height: calc(100vh - 200px);
+}
+
+/* Wiki Content Styles */
+.wiki-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 2rem;
+}
+
+.wiki-content h1 {
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.wiki-content h2 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.25rem;
+    border-bottom: 1px solid #f1f1f1;
+}
+
+.wiki-content h3, .wiki-content h4, .wiki-content h5, .wiki-content h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.wiki-content p {
+    margin-bottom: 1.25rem;
+}
+
+.wiki-content ul, .wiki-content ol {
+    margin-bottom: 1.25rem;
+    padding-left: 1.5rem;
+}
+
+.wiki-content blockquote {
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.25rem;
+    border-left: 4px solid #e9ecef;
+    background-color: #f8f9fa;
+}
+
+.wiki-content pre {
+    margin-bottom: 1.25rem;
+    border-radius: 0.25rem;
+}
+
+.wiki-content code {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #f8f9fa;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.25rem;
+}
+
+.wiki-content pre code {
+    padding: 0;
+    background-color: transparent;
+}
+
+.wiki-content img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 1.25rem;
+    border-radius: 0.25rem;
+}
+
+.wiki-content table {
+    width: 100%;
+    margin-bottom: 1.25rem;
+    border-collapse: collapse;
+}
+
+.wiki-content table th, .wiki-content table td {
+    padding: 0.5rem;
+    border: 1px solid #e9ecef;
+}
+
+.wiki-content table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+/* Wiki Links */
+.wiki-link {
+    color: #007bff;
+    text-decoration: none;
+    border-bottom: 1px dashed #007bff;
+}
+
+.wiki-link:hover {
+    color: #0056b3;
+    border-bottom: 1px solid #0056b3;
+}
+
+/* Backlinks */
+.backlinks {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    border-left: 4px solid #007bff;
+}
+
+.backlinks h3 {
+    margin-top: 0;
+    font-size: 1.25rem;
+}
+
+.backlinks ul {
+    margin-bottom: 0;
+}
+
+/* Search Results */
+.search-results mark {
+    background-color: #fff3cd;
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.25rem;
+}
+
+/* Sidebar */
+.card {
+    margin-bottom: 1.5rem;
+    border: none;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #e9ecef;
+    font-weight: 600;
+}
+
+.all-pages-list {
+    scrollbar-width: thin;
+}
+
+.all-pages-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.all-pages-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.all-pages-list::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 3px;
+}
+
+.all-pages-list::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
+/* Admin Area */
+.admin-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 0.25rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    margin-bottom: 2rem;
+}
+
+.admin-card {
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+.admin-card:hover {
+    transform: translateY(-5px);
+}
+
+.admin-card .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.admin-card .icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #007bff;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767.98px) {
+    .wiki-content {
+        padding: 1.5rem;
+    }
+    
+    .navbar .form-inline {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+}

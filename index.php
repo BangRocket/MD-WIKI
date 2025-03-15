@@ -1,0 +1,106 @@
+<?php
+/**
+ * MD-WIKI Main Entry Point
+ */
+
+// Include required files
+require_once __DIR__ . '/config/config.php';
+require_once __DIR__ . '/includes/database.php';
+require_once __DIR__ . '/includes/functions.php';
+require_once __DIR__ . '/includes/markdown.php';
+require_once __DIR__ . '/includes/search.php';
+
+// Get home page
+$homePage = getPageBySlug('home');
+
+// If home page doesn't exist, redirect to admin setup
+if (!$homePage) {
+    redirect('/admin/setup.php');
+}
+
+// Get recent pages for sidebar
+$recentPages = getRecentPages(5);
+
+// Get all pages for navigation
+$allPages = getAllPages();
+
+// Include header
+include __DIR__ . '/includes/header.php';
+?>
+
+<div class="container mt-4">
+    <div class="row">
+        <!-- Main content -->
+        <div class="col-md-9">
+            <article class="wiki-content">
+                <h1><?= h($homePage['title']) ?></h1>
+                <div class="content">
+                    <?= $homePage['content_html'] ?>
+                </div>
+            </article>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-md-3">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-search"></i> Search
+                </div>
+                <div class="card-body">
+                    <form action="search.php" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="q" placeholder="Search...">
+                            <button class="btn btn-primary" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="bi bi-clock-history"></i> Recent Pages
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <?php foreach ($recentPages as $page): ?>
+                            <li class="mb-2">
+                                <a href="page.php?slug=<?= h($page['slug']) ?>">
+                                    <?= h($page['title']) ?>
+                                </a>
+                                <small class="text-muted d-block">
+                                    <?= formatDatetime($page['updated_at'], 'M j, Y') ?>
+                                </small>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <i class="bi bi-book"></i> All Pages
+                </div>
+                <div class="card-body">
+                    <div class="all-pages-list" style="max-height: 300px; overflow-y: auto;">
+                        <ul class="list-unstyled">
+                            <?php foreach ($allPages as $page): ?>
+                                <li class="mb-1">
+                                    <a href="page.php?slug=<?= h($page['slug']) ?>">
+                                        <?= h($page['title']) ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+// Include footer
+include __DIR__ . '/includes/footer.php';
+?>
