@@ -34,6 +34,12 @@ $messageType = '';
 $configFile = __DIR__ . '/../config/config.php';
 $configContent = file_get_contents($configFile);
 
+// Get all pages for home page selection
+$allPages = getAllPages();
+
+// Get current home page setting
+$homePageSlug = getSetting('home_page_slug', 'home');
+
 // Process settings form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save_settings') {
     // Get form data
@@ -42,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     $vaultPath = isset($_POST['vault_path']) ? trim($_POST['vault_path']) : '';
     $adminEmail = isset($_POST['admin_email']) ? trim($_POST['admin_email']) : '';
     $debugMode = isset($_POST['debug_mode']) ? (bool)$_POST['debug_mode'] : false;
+    $homePageSlug = isset($_POST['home_page_slug']) ? trim($_POST['home_page_slug']) : 'home';
     
     // Validate form data
     $errors = [];
@@ -127,10 +134,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $configContent
         );
         
+        // Update home page setting
+        $homePageSettingUpdated = updateSetting('home_page_slug', $homePageSlug);
+        
         // Write updated config to file
         if (file_put_contents($configFile, $configContent)) {
-            $message = 'Settings saved successfully.';
-            $messageType = 'success';
+            if (!$homePageSettingUpdated && DEBUG_MODE) {
+                $message = 'Settings saved successfully, but there was an issue updating the home page setting. Please run the migrate_settings.php script first.';
+                $messageType = 'warning';
+            } else {
+                $message = 'Settings saved successfully.';
+                $messageType = 'success';
+            }
         } else {
             $message = 'Error saving settings. Check file permissions.';
             $messageType = 'danger';
@@ -210,6 +225,21 @@ include __DIR__ . '/includes/header.php';
                                 <input type="checkbox" class="form-check-input" id="debug_mode" name="debug_mode" value="1" <?= $debugMode ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="debug_mode">Debug Mode</label>
                                 <div class="form-text">Enable debug mode to show detailed error messages. Disable in production.</div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="home_page_slug" class="form-label">Home Page</label>
+                                <select class="form-select" id="home_page_slug" name="home_page_slug">
+                                    <?php foreach ($allPages as $page): ?>
+                                        <option value="<?= h($page['slug']) ?>" <?= $homePageSlug === $page['slug'] ? 'selected' : '' ?>>
+                                            <?= h($page['title']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="form-text">
+                                    Select which page should be displayed as the home page.
+                                    <strong>Note:</strong> You need to run the <a href="migrate_settings.php">migration script</a> first to enable this feature.
+                                </div>
                             </div>
                             
                             <div class="mb-3">

@@ -64,6 +64,7 @@ function dbQuery($sql, $params = []) {
  * @param string $sql SQL query
  * @param array $params Parameters for prepared statement
  * @return array|null Single row or null if not found
+ * @throws PDOException If query fails
  */
 function dbQuerySingle($sql, $params = []) {
     try {
@@ -73,6 +74,12 @@ function dbQuerySingle($sql, $params = []) {
         $result = $stmt->fetch();
         return $result !== false ? $result : null;
     } catch (PDOException $e) {
+        // Check if the error is about a missing table (for settings table)
+        if (strpos($e->getMessage(), "Table") !== false && strpos($e->getMessage(), "doesn't exist") !== false) {
+            // Rethrow the exception for settings-related queries so they can be caught
+            throw $e;
+        }
+        
         if (DEBUG_MODE) {
             die("Query failed: " . $e->getMessage());
         } else {
@@ -87,6 +94,7 @@ function dbQuerySingle($sql, $params = []) {
  * @param string $sql SQL query
  * @param array $params Parameters for prepared statement
  * @return int Number of affected rows
+ * @throws PDOException If query fails
  */
 function dbExecute($sql, $params = []) {
     try {
@@ -95,6 +103,12 @@ function dbExecute($sql, $params = []) {
         $stmt->execute($params);
         return $stmt->rowCount();
     } catch (PDOException $e) {
+        // Check if the error is about a missing table (for settings table)
+        if (strpos($e->getMessage(), "Table") !== false && strpos($e->getMessage(), "doesn't exist") !== false) {
+            // Rethrow the exception for settings-related queries so they can be caught
+            throw $e;
+        }
+        
         if (DEBUG_MODE) {
             die("Query failed: " . $e->getMessage());
         } else {

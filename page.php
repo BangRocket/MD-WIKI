@@ -29,7 +29,7 @@ $slug = isset($_GET['slug']) ? $_GET['slug'] : '';
 
 // If no slug provided, redirect to home
 if (empty($slug)) {
-    redirect('/index.php');
+    redirect(APP_URL . '/index.php');
 }
 
 // Get page by slug
@@ -44,7 +44,7 @@ if (!$page) {
     echo '<div class="alert alert-warning">';
     echo '<h1>Page Not Found</h1>';
     echo '<p>The page "' . h($slug) . '" does not exist.</p>';
-    echo '<p><a href="index.php">Return to Home</a></p>';
+    echo '<p><a href="' . APP_URL . '/index.php">Return to Home</a></p>';
     echo '</div>';
     echo '</div>';
     

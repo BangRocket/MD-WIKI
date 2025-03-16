@@ -23,12 +23,30 @@ require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/markdown.php';
 require_once __DIR__ . '/includes/search.php';
 
+// Get home page slug from settings (default to 'home' if not set)
+$homePageSlug = getSetting('home_page_slug', 'home');
+
+// For debugging
+if (DEBUG_MODE) {
+    error_log("Home page slug from settings: " . $homePageSlug);
+}
+
 // Get home page
-$homePage = getPageBySlug('home');
+$homePage = getPageBySlug($homePageSlug);
+
+// For debugging
+if (DEBUG_MODE && !$homePage) {
+    error_log("Home page not found for slug: " . $homePageSlug);
+}
 
 // If home page doesn't exist, redirect to admin setup
 if (!$homePage) {
-    redirect('/admin/setup.php');
+    redirect(APP_URL . '/admin/setup.php');
+}
+
+// If home page slug is not 'home', redirect to that page
+if ($homePageSlug !== 'home') {
+    redirect(APP_URL . '/page.php?slug=' . $homePageSlug);
 }
 
 // Get recent pages for sidebar

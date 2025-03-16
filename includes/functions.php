@@ -191,3 +191,46 @@ function startsWith($haystack, $needle) {
 function endsWith($haystack, $needle) {
     return substr($haystack, -strlen($needle)) === $needle;
 }
+
+/**
+ * Get a setting value
+ * 
+ * @param string $key Setting key
+ * @param mixed $default Default value if setting not found
+ * @return mixed Setting value or default
+ */
+function getSetting($key, $default = null) {
+    try {
+        $setting = dbQuerySingle("SELECT setting_value FROM settings WHERE setting_key = ?", [$key]);
+        return $setting ? $setting['setting_value'] : $default;
+    } catch (Exception $e) {
+        // If there's an error (e.g., table doesn't exist), return the default value
+        if (DEBUG_MODE) {
+            error_log("Error in getSetting: " . $e->getMessage());
+        }
+        return $default;
+    }
+}
+
+/**
+ * Update a setting value
+ * 
+ * @param string $key Setting key
+ * @param string $value Setting value
+ * @return bool True if successful
+ */
+function updateSetting($key, $value) {
+    try {
+        return dbExecute(
+            "INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) 
+             ON DUPLICATE KEY UPDATE setting_value = ?",
+            [$key, $value, $value]
+        );
+    } catch (Exception $e) {
+        // If there's an error (e.g., table doesn't exist), log it and return false
+        if (DEBUG_MODE) {
+            error_log("Error in updateSetting: " . $e->getMessage());
+        }
+        return false;
+    }
+}
